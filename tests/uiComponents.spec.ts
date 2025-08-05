@@ -72,3 +72,19 @@ test.describe("Toastr page", () => {
     }
   });
 });
+
+test("Lists and Dropdowns", async ({ page }) => {
+  const dropdownMenu = page.locator("ngx-header nb-select");
+  await dropdownMenu.click();
+
+  page.getByRole("list"); // When the list has a UL tag
+  page.getByRole("listitem"); // When the list has LI tag
+
+  const optionList = page.locator("nb-option-list nb-option");
+  await expect(optionList).toHaveText(["Light", "Dark", "Cosmic", "Corporate"]);
+  await optionList.filter({ hasText: "Cosmic" }).click();
+  await expect(page.locator("nb-layout-header")).toHaveCSS(
+    "background-color",
+    "rgb(50, 50, 89)"
+  );
+});
