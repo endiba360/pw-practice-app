@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { NavigationPage } from "../page-objects/navigationPage";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:4200/");
@@ -6,8 +7,8 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Form Layouts page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.getByText("Forms").click();
-    await page.getByText("Form Layouts").click();
+    const navigateTo = new NavigationPage(page);
+    await navigateTo.formLayoutsPage();
   });
   test("Input fields", async ({ page }) => {
     const usingTheGridEmailInput = page
@@ -51,8 +52,8 @@ test.describe("Form Layouts page", () => {
 
 test.describe("Toastr page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.getByText("Modal & Overlays").click();
-    await page.getByText("Toastr").click();
+    const navigateTo = new NavigationPage(page);
+    await navigateTo.toastrPage();
   });
   test("Checkboxes", async ({ page }) => {
     await page
@@ -103,8 +104,8 @@ test("Lists and Dropdowns", async ({ page }) => {
 });
 
 test("Tooltips", async ({ page }) => {
-  await page.getByText("Modal & Overlays").click();
-  await page.getByText("Tooltip").click();
+  const navigateTo = new NavigationPage(page);
+  await navigateTo.tooltipPage();
 
   const tooltipCard = page.locator("nb-card", {
     hasText: "Tooltip Placements",
@@ -115,8 +116,9 @@ test("Tooltips", async ({ page }) => {
 });
 
 test("Dialog boxes", async ({ page }) => {
-  await page.getByText("Tables & Data").click();
-  await page.getByText("Smart Table").click();
+  const navigateTo = new NavigationPage(page);
+  await navigateTo.smartTablePage();
+
   page.on("dialog", (dialog) => {
     expect(dialog.message()).toEqual("Are you sure you want to delete?");
     dialog.accept();

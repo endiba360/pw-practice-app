@@ -11,4 +11,19 @@ export class NavigationPage {
     await this.page.getByText("Forms").click();
     await this.page.getByText("Form Layouts").click();
   }
+
+  async toastrPage() {
+    await this.page.getByText("Modal & Overlays").click();
+    await this.page.getByText("Toastr").click();
+  }
+
+  async tooltipPage() {
+    await this.page.getByText("Modal & Overlays").click();
+    await this.page.getByText("Tooltip").click();
+  }
+
+  async smartTablePage() {
+    await this.page.getByText("Tables & Data").click();
+    await this.page.getByText("Smart Table").click();
+  }
 }
