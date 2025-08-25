@@ -19,6 +19,25 @@ export class DatepickerPage {
     await expect(calendarInputField).toHaveValue(dateToAssert);
   }
   /**
+   * This method selects a date with range from one starting date to an ending date
+   * @param startDayFromToday - Date to start selection
+   * @param endDayFromToday Date to end selection
+   */
+  async selectDatepickerWithRangeFromToday(
+    startDayFromToday: number,
+    endDayFromToday: number
+  ) {
+    const calendarInputField = this.page.getByPlaceholder("Range Picker");
+    await calendarInputField.click();
+    const startDateToAssert = await this.selectDateInCalender(
+      startDayFromToday
+    );
+    const endDateToAssert = await this.selectDateInCalender(endDayFromToday);
+
+    const dateToAssert = `${startDateToAssert} - ${endDateToAssert}`;
+    await expect(calendarInputField).toHaveValue(dateToAssert);
+  }
+  /**
    * This private method selects date from today up to given number of days
    * @param numberOfDaysFromToday - number of days to add for date selection
    * @returns - This method returns a date
@@ -44,11 +63,15 @@ export class DatepickerPage {
         .locator("nb-calendar-view-mode")
         .textContent();
     }
-    await this.page
-      .locator('[class="day-cell ng-star-inserted"]')
-      .getByText(expectedDate, { exact: true })
-      .click();
-
+    const dayCell = this.page.locator('[class="day-cell ng-star-inserted"]');
+    const rangeCell = this.page.locator(
+      '[class="range-cell day-cell ng-star-inserted"]'
+    );
+    if (await dayCell.first().isVisible()) {
+      await dayCell.getByText(expectedDate, { exact: true }).click();
+    } else {
+      await rangeCell.getByText(expectedDate, { exact: true }).click();
+    }
     return dateToAssert;
   }
 }

@@ -33,5 +33,6 @@ test("Parametrized methods", async ({ page }) => {
     true
   );
   await navigateTo.datepickerPage();
-  await onDatepickerPage.selectCommonDatepickerDateFromToday(10);
+  await onDatepickerPage.selectCommonDatepickerDateFromToday(6);
+  await onDatepickerPage.selectDatepickerWithRangeFromToday(1, 3);
 });
