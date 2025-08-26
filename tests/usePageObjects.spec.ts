@@ -1,38 +1,34 @@
 import { test } from "@playwright/test";
-import { NavigationPage } from "../page-objects/navigationPage";
-import { FormLayoutsPage } from "../page-objects/formLayoutsPage";
-import { DatepickerPage } from "../page-objects/datepickerPage";
+import { PageManager } from "../page-objects/pageManager";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:4200/");
 });
 
 test("Navigate to Form page", async ({ page }) => {
-  const navigateTo = new NavigationPage(page);
-  await navigateTo.formLayoutsPage();
-  await navigateTo.datepickerPage();
-  await navigateTo.toastrPage();
-  await navigateTo.tooltipPage();
-  await navigateTo.smartTablePage();
+  const pm = new PageManager(page);
+  await pm.navigateTo().formLayoutsPage();
+  await pm.navigateTo().datepickerPage();
+  await pm.navigateTo().toastrPage();
+  await pm.navigateTo().tooltipPage();
+  await pm.navigateTo().smartTablePage();
 });
 
 test("Parametrized methods", async ({ page }) => {
-  const navigateTo = new NavigationPage(page);
-  const onFormLayoutsPage = new FormLayoutsPage(page);
-  const onDatepickerPage = new DatepickerPage(page);
+  const pm = new PageManager(page);
 
-  await navigateTo.formLayoutsPage();
-  await onFormLayoutsPage.submitUsingTheGridFormWithCredentialsAndSelectOptions(
+  await pm.navigateTo().formLayoutsPage();
+  await pm.onFormLayoutsPage().submitUsingTheGridFormWithCredentialsAndSelectOptions(
     "test@gmail.com",
     "pAssW0rd",
     "Option 2"
   );
-  await onFormLayoutsPage.submitInLineFormWithNameEmailAndCheckbox(
+  await pm.onFormLayoutsPage().submitInLineFormWithNameEmailAndCheckbox(
     "Reed Richards",
     "fantastic4@gmail.com",
     true
   );
-  await navigateTo.datepickerPage();
-  await onDatepickerPage.selectCommonDatepickerDateFromToday(6);
-  await onDatepickerPage.selectDatepickerWithRangeFromToday(1, 3);
+  await pm.navigateTo().datepickerPage();
+  await pm.onDatepickerPage().selectCommonDatepickerDateFromToday(6);
+  await pm.onDatepickerPage().selectDatepickerWithRangeFromToday(1, 3);
 });
