@@ -1,10 +1,9 @@
 import { Locator, Page, expect } from "@playwright/test";
+import { HelperBase } from "./helperBase";
 
-export class DatepickerPage {
-  readonly page: Page;
-
+export class DatepickerPage extends HelperBase {
   constructor(page: Page) {
-    this.page = page;
+    super(page);
   }
   /**
    * This method selects a date from current day
