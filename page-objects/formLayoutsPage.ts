@@ -1,9 +1,9 @@
 import { Locator, Page } from "@playwright/test";
+import { HelperBase } from "./helperBase";
 
-export class FormLayoutsPage {
-  readonly page: Page;
+export class FormLayoutsPage extends HelperBase {
   constructor(page: Page) {
-    this.page = page;
+    super(page);
   }
   /**
    * This method will fill Using the grid form with email, password and select options
